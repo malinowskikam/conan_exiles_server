@@ -1,0 +1,7 @@
+#Ignore extracted config
+/current_config
+
+#Ignore all files in config beside README
+/config
+!/config/README.md
+

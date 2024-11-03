@@ -1,0 +1,18 @@
+name: "conan_exiles_server"
+services:
+  server:
+    build: .
+    volumes:
+      - "conan_exiles:/conan_exiles"
+      - "wine64:/wine64"
+      - "./config:/config"
+    ports:
+      - "7777:7777/udp"
+      - "7778:7778/udp"
+      - "27015:27015/udp"
+      - "7777:7777/tcp"
+      - "25575:25575/tcp"
+
+volumes:
+  conan_exiles:
+  wine64:
