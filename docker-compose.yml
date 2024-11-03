@@ -1,7 +1,8 @@
 name: "conan_exiles_server"
 services:
   server:
-    build: .
+    # build: .
+    image: ghcr.io/malinowskikam/conan_exiles_server:latest
     volumes:
       - "conan_exiles:/conan_exiles"
       - "wine64:/wine64"
