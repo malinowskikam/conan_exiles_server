@@ -1,0 +1,35 @@
+name: "Build and deploy image to GHCR"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-deploy-image:
+    name: "Build and deploy image"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@main
+
+      - name: 'Cache docker layers'
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
+      - name: 'Login to GHCR'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{github.token}}
+
+      - name: 'Build'
+        run: |
+          docker build . --tag ghcr.io/malinowskikam/conan_exiles_server:latest 
+          docker push ghcr.io/malinowskikam/conan_exiles_server:latest
+
